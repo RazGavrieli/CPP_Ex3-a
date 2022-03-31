@@ -12,7 +12,7 @@ namespace zich {
 class Matrix
 {
     std::vector<std::vector<double>> mat;
-    int n, m; // as in matrix is n X m (n rows by m collums)
+    unsigned int rows, cols; // as in matrix is n X m (n rows by m collums)
 
 
 // +, += , + unari, -, -=, - unari
@@ -23,16 +23,20 @@ class Matrix
 // <<, >> 
 
 public:
-    Matrix(std::vector<double> baseArr, int n, int m);
+    Matrix(std::vector<double> baseArr, int rows, int cols);
+    ~Matrix();
+    
+    double operator()(unsigned int row, unsigned int col) const; // this function is a test
 
     Matrix operator + (Matrix const &other);
     void operator += (Matrix const &other);
-    friend Matrix operator + (Matrix const &m1, Matrix const &m2);
+    Matrix operator + ();
 
-    Matrix operator - (Matrix const &other);
-    Matrix operator -= (Matrix const &other);
-    friend Matrix operator - (Matrix const &m1, Matrix const &m2);
+    Matrix operator - (Matrix other);
+    void operator -= (Matrix const &other);
+    Matrix operator - ();
 
+    
 
     bool operator > (Matrix const &other);
     bool operator >= (Matrix const &other);
