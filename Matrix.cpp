@@ -13,18 +13,14 @@ Matrix::Matrix(std::vector<double> baseArr, int signedrows, int signedcols)
     }
     unsigned int rows = (unsigned int)signedrows;
     unsigned int cols = (unsigned int)signedcols;
-    if (baseArr.size()>rows*cols) {
+    if (baseArr.size()!=rows*cols) {
         throw std::runtime_error("The given vector won't fit into the size of the Matrix");
     }
     this->rows = rows;
     this->cols = cols;
     std::vector<double> currRow;
     for (size_t i = 0; i < rows*cols; i++) {
-        if (i<baseArr.size()) {
-            currRow.push_back(baseArr.at(i));
-        } else {
-            currRow.push_back(0);
-        }
+        currRow.push_back(baseArr.at(i));
         if (currRow.size() == cols) {
             this->mat.push_back(currRow);
             currRow.resize(0);
