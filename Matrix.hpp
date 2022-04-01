@@ -6,7 +6,7 @@
 #define Matrix_H
 
 #include <vector>
-
+#include <iostream>
 
 namespace zich {
 class Matrix
@@ -21,14 +21,16 @@ class Matrix
 // x*A
 // A*B | if you can't multiply matrices (different n OR m) throw error 
 // <<, >> 
-
+    double at(unsigned int row, unsigned int col) const;
 public:
     Matrix(std::vector<double> baseArr, int rows, int cols);
+    Matrix(std::vector<std::vector<double>> mat, unsigned int rows, unsigned int cols);
     ~Matrix();
     
     double operator()(unsigned int row, unsigned int col) const; // this function is a test
+    
 
-    Matrix operator + (Matrix const &other);
+    Matrix operator + (Matrix const &other); 
     void operator += (Matrix const &other);
     Matrix operator + ();
 
@@ -36,12 +38,11 @@ public:
     void operator -= (Matrix const &other);
     Matrix operator - ();
 
-    
 
     bool operator > (Matrix const &other);
     bool operator >= (Matrix const &other);
-    bool operator < (Matrix const &other);
-    bool operator <= (Matrix const &other);
+    bool operator < (Matrix const other);
+    bool operator <= (Matrix const other);
     bool operator == (Matrix const &other);
     bool operator != (Matrix const &other);
 
@@ -50,11 +51,15 @@ public:
     Matrix& operator -- (); // --Prefix
     Matrix operator -- (int); // Postfix--
 
-    Matrix operator *(int const &scalar);
-    friend Matrix operator * (Matrix const &m1, Matrix const &m2);
+    Matrix operator * (double const &scalar);
+    friend Matrix operator * (double const &scalar, Matrix other);
+    Matrix operator * (Matrix const &other);
+    void operator *= (double const &scalar);
 
-    //void operator << (Matrix const &other); // why get "other"?
-    //void operator >> (Matrix const &other); // why get "other"?
+    // void operator << (); // why get "other"?
+    // void operator >> (); // why get "other"?
+
+    friend std::ostream& operator << (std::ostream&, Matrix other);
 
     void print();
 };
