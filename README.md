@@ -1,5 +1,4 @@
-learn about const function
-learn about 
+
 
 
 <div dir="rtl" lang="he">
