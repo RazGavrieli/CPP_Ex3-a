@@ -1,7 +1,3 @@
-/** 
- * 
- * */
-
 #ifndef Matrix_H
 #define Matrix_H
 
@@ -12,16 +8,10 @@ namespace zich {
 class Matrix
 {
     std::vector<std::vector<double>> mat;
-    unsigned int rows, cols; // as in matrix is n X m (n rows by m collums)
-
-
-// +, += , + unari, -, -=, - unari
-// >, >=, <, <=, ==, != | if you can't compare (different n OR m) throw error 
-// A++, A--, ++A, --A
-// x*A
-// A*B | if you can't multiply matrices (different n OR m) throw error 
-// <<, >> 
+    unsigned int rows, cols;
+ 
     double at(unsigned int row, unsigned int col) const;
+    
 public:
     Matrix(std::vector<double> baseArr, int rows, int cols);
     Matrix(std::vector<std::vector<double>> mat, unsigned int rows, unsigned int cols);
@@ -29,7 +19,6 @@ public:
     
     double operator()(unsigned int row, unsigned int col) const; // this function is a test
     
-
     Matrix operator + (Matrix const &other); 
     void operator += (Matrix const &other);
     Matrix operator + ();
@@ -56,10 +45,10 @@ public:
     void operator *= (double const &scalar);
 
 
-    friend std::ostream& operator << (std::ostream&, Matrix other);
-    //std::ostream& operator >> (std::ostream&, Matrix other);
+    friend std::ostream& operator << (std::ostream&, Matrix const &other);
+    friend std::istream& operator >> (std::ostream&, Matrix &other);
 
-    void print();
+
 };
 }
 #endif

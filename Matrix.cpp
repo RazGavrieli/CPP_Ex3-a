@@ -35,8 +35,6 @@ Matrix::Matrix(std::vector<std::vector<double>> mat, unsigned int rows, unsigned
 }
 Matrix::~Matrix() {}
 
-double Matrix::operator () (unsigned int r,unsigned int c)const{ return mat.at(r).at(c);} // this function is a test
-
 double Matrix::at(unsigned int r,unsigned int c) const{ 
     if (r>=rows||c>=cols) {
         throw std::runtime_error("out of bounds!");
@@ -103,7 +101,6 @@ bool Matrix::operator < (Matrix other){
         throw std::runtime_error("can't perform comparsion due to unequal dimensions");
     }
     double temp = other.at(0,0);
-    other.mat[0][0] = 2;
     other.mat[0][0] = temp;
     double sumThis = 0;
     double sumOther = 0;
@@ -123,7 +120,6 @@ bool Matrix::operator <= (Matrix other){
         throw std::runtime_error("can't perform comparsion due to unequal dimensions");
     }
     double temp = other.at(0,0);
-    other.mat[0][0] = 2;
     other.mat[0][0] = temp;
     double sumThis = 0;
     double sumOther = 0;
@@ -217,7 +213,7 @@ Matrix& Matrix::operator ++ () {// ++Prefix
     return *this;
 }
 
-Matrix Matrix::operator ++ (int) {// Postfix++
+Matrix Matrix::operator ++ (int dummy) {// Postfix++
     Matrix temp = *this;
     for (size_t i = 0; i < rows; i++)
     {
@@ -240,7 +236,7 @@ Matrix& Matrix::operator -- () {// --Prefix
     return *this;
 }
 
-Matrix Matrix::operator -- (int) {// Postfix--
+Matrix Matrix::operator -- (int dummy) {// Postfix--
     Matrix temp = *this;
     for (size_t i = 0; i < rows; i++)
     {
@@ -307,14 +303,13 @@ void Matrix::operator *= (double const &scalar) {
 
 
 namespace zich {
-    Matrix operator * (double const &scalar, Matrix other) {
+    Matrix operator * (double const &scalar, Matrix other) {      
         double temp = other.at(0,0);
-        other.mat[0][0] = 2;
         other.mat[0][0] = temp;
         Matrix ans = other;
-        for (size_t i = 0; i < other.rows; i++)
+        for (size_t i = 0; i < ans.rows; i++)
         {
-            for (size_t j = 0; j < other.cols; j++)
+            for (size_t j = 0; j < ans.cols; j++)
             {
                 ans.mat[i][j] *= scalar;
             }
@@ -322,11 +317,7 @@ namespace zich {
         return ans;
     }
 
-// namespace zich {
-    std::ostream& operator << (std::ostream& os, Matrix other) {
-        double temp = other.at(0,0);
-        other.mat[0][0] = 2;
-        other.mat[0][0] = temp;
+    std::ostream& operator << (std::ostream& os, Matrix const &other) {
         for (size_t i = 0; i < other.rows; i++)
         {
             os << "[";
@@ -344,31 +335,11 @@ namespace zich {
 
         return os;
     }
+
+    std::istream& operator >> (std::istream& input, Matrix &other) {
+        // I dont understand whats going on here
+        return input;
+    }
 }
-
-// int main() {
-//     //std::vector<double> identity = {3, 4, -1, 2, 5, 2.4, 3, 3, 7, 4, 4, 11.3};
-//     /*
-//     * [ 3, 4, -1, 2 ]
-//     * [ 5, 2.4, 3, 3 ]
-//     * [ 7, 4, 4, 11.3]
-//     * 3, 4, -1, 2, 5, 2.4, 3, 3, 7, 4, 4, 11.3
-//     */
-
-//     std::vector<double> identity = {1, 0, 0, 0, 1, 0, 0, 0, 1};
-//     std::vector<double> id = {3, 4, -1, 2, 5, 2.4, 3, 3, 7};
-//     Matrix a{identity, 3, 3};  // constructor taking a vector and a matrix size
-//     Matrix b{id, 3, 3};
-//     a.print();
-//     b.print();
-//     a += b;
-//     a.print();
-//     b += b;
-//     a.print();
-//     b.print();
-
-
-//     return 0;
-// }
 
 
