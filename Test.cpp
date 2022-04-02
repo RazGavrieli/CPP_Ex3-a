@@ -1,12 +1,12 @@
 #include "doctest.h"
 #include "Matrix.hpp"
 using namespace zich;
-// +, += , + unari, -, -=, - unari, A*B | if you can't multiply matrices (different n OR m) throw error 
-// >, >=, <, <=, ==, != | if you can't compare (different n OR m) throw error 
-// A++, A--, ++A, --A
-// x*A, A*x
-// <<, >> 
-
+/**
+ * Test file to check the correctness of a Matrix class
+ *
+ * @author Raz Gavrieli -> razgavrieli@gmail.com
+ * @since 2022-03
+ */
 TEST_CASE("Different operations with correct inputs and usage") {
     
     SUBCASE("Comparators") {
@@ -64,7 +64,6 @@ TEST_CASE("Different operations with correct inputs and usage") {
         Matrix M{{32, 12, 22, 18}, 2, 2};
         CHECK_MESSAGE((J+K+L == M) == true, "\n\toutput:\n" << (J+K+L) << "\t expected:\n" << M);
     }
-
     SUBCASE("++ and -- postfix and prefix") {
         /**
          * @brief This subcase checks the correctness of ++ and -- (postfix and prefix).
@@ -95,11 +94,22 @@ TEST_CASE("Different operations with correct inputs and usage") {
         
         Matrix D{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, 5, 2};
         CHECK_MESSAGE((A*B == D) == true,   "\n\toutput:\n" << A*B << "\t expected:\n" << D); // A IS ZERO MATRIX
+        CHECK_MESSAGE((A*C == D) == true,   "\n\toutput:\n" << A*C << "\t expected:\n" << D); // A IS ZERO MATRIX
+        D++;
         Matrix E{{0, 1, 9, 6, 0, 6, 0, 5, 1, 7}, 2, 5};
         Matrix BE{{12, 1, 19, 8, 14, 12, 3, 37, 20, 14, 43.2, 1.5, 49.5, 16.2, 50.4}, 3, 5};
         Matrix F{{2,3,2,1,5}, 5, 1};
         Matrix BEF{{143, 197, 458.1}, 3, 1};
+        Matrix DE{{6, 1, 14, 7, 7,6, 1, 14, 7, 7,6, 1, 14, 7, 7,6, 1, 14, 7, 7,6, 1, 14, 7, 7}, 5, 5};
+        Matrix BEDE{{324, 54, 756, 378, 378, 516, 86, 1204, 602, 602, 964.8+1.13687e-13, 160.8, 2251.2, 1125.6+2.27374e-13, 1125.6+2.27374e-13}, 3, 5};
         CHECK_MESSAGE((B*E*F == BEF) == true,   "\n\toutput:\n" << B*E*F << "\t expected:\n" << BEF); 
+        CHECK_MESSAGE((D*E == DE) == true,   "\n\toutput:\n" << D*E << "\t expected:\n" << DE); 
+        CHECK_MESSAGE((B*E*D*E == BEDE) == true,   "\n\toutput:\n" << B*E*D*E << "\t expected:\n" << BEDE); 
+        CHECK_MESSAGE((BE*D*E == BEDE) == true,   "\n\toutput:\n" << BE*D*E << "\t expected:\n" << BEDE); 
+        Matrix G{{5, 1}, 1, 2};
+        Matrix FG{{10, 2, 15, 3, 10, 2, 5, 1, 25, 5}, 5, 2};
+        CHECK_MESSAGE((F*G == FG) == true,   "\n\toutput:\n" << F*G << "\t expected:\n" << FG); 
+
     }
 
 }
@@ -111,9 +121,11 @@ TEST_CASE("Bad inputs and wrong usage") {
         try {Matrix C{{0,0,0,0}, 2, 1};} catch (const std::exception&) {failed++;}
         try {Matrix C{{}, 0, 1};} catch (const std::exception&) {failed++;}
         try {Matrix C{{0,0,0,0}, 2, -1};} catch (const std::exception&) {failed++;}
+        if (failed!=3) CHECK_MESSAGE(false, "An exepction was not thrown when needed!");
+        else CHECK(true);
         try {Matrix C{{0,0,0,0}, 2, 2};} catch (const std::exception&) {CHECK(false);}
         try {Matrix C{{0,0}, 1, 2};} catch (const std::exception&) {CHECK(false);}
-        if (failed!=3) CHECK_MESSAGE(false, "An exepction was not thrown when needed!");;
+        
     }
     
     Matrix A{{0, 0, 0, 0, 0, 2, 0, 0, 0, 0}, 5, 2};
@@ -142,6 +154,7 @@ TEST_CASE("Bad inputs and wrong usage") {
         try { test = A>B ;} catch(const std::exception&) {failed++;}
         try { test = A<B ;} catch(const std::exception&) {failed++;}
         if (failed!=6) CHECK_MESSAGE(false, "An exepction was not thrown when needed!");
+        else CHECK(true);
 
         
     }
@@ -165,7 +178,6 @@ TEST_CASE("Bad inputs and wrong usage") {
         CHECK_THROWS(B+B-A);
         CHECK_NOTHROW(B-B+B);
     }
-
     SUBCASE("Multipications") {
         /**
          * @brief Matrix multipication of kind A * B, should only be possible

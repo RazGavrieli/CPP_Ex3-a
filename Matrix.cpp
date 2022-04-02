@@ -99,10 +99,43 @@ bool Matrix::operator >= (Matrix const &other){
 }
 
 bool Matrix::operator < (Matrix other){
-    return other>*this;
+   if (cols!=other.cols||rows!=other.rows) {
+        throw std::runtime_error("can't perform comparsion due to unequal dimensions");
+    }
+    double temp = other.at(0,0);
+    other.mat[0][0] = 2;
+    other.mat[0][0] = temp;
+    double sumThis = 0;
+    double sumOther = 0;
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < cols; j++)
+        {
+            sumThis += at(i,j);
+            sumOther += other.at(i,j);
+        }
+    }
+    return sumThis<sumOther; 
 }
+
 bool Matrix::operator <= (Matrix other){
-    return other>=*this;
+    if (cols!=other.cols||rows!=other.rows) {
+        throw std::runtime_error("can't perform comparsion due to unequal dimensions");
+    }
+    double temp = other.at(0,0);
+    other.mat[0][0] = 2;
+    other.mat[0][0] = temp;
+    double sumThis = 0;
+    double sumOther = 0;
+    for (size_t i = 0; i < rows; i++)
+    {
+        for (size_t j = 0; j < cols; j++)
+        {
+            sumThis += at(i,j);
+            sumOther += other.at(i,j);
+        }
+    }
+    return sumThis<=sumOther;    
 }
 
 Matrix Matrix::operator + (Matrix const &other) {
@@ -272,13 +305,16 @@ void Matrix::operator *= (double const &scalar) {
         }
     }
 
-namespace zich {
 
+namespace zich {
     Matrix operator * (double const &scalar, Matrix other) {
+        double temp = other.at(0,0);
+        other.mat[0][0] = 2;
+        other.mat[0][0] = temp;
         Matrix ans = other;
-        for (size_t i = 0; i < ans.rows; i++)
+        for (size_t i = 0; i < other.rows; i++)
         {
-            for (size_t j = 0; j < ans.cols; j++)
+            for (size_t j = 0; j < other.cols; j++)
             {
                 ans.mat[i][j] *= scalar;
             }
@@ -286,8 +322,11 @@ namespace zich {
         return ans;
     }
 
-
+// namespace zich {
     std::ostream& operator << (std::ostream& os, Matrix other) {
+        double temp = other.at(0,0);
+        other.mat[0][0] = 2;
+        other.mat[0][0] = temp;
         for (size_t i = 0; i < other.rows; i++)
         {
             os << "[";

@@ -1,3 +1,7 @@
+learn about const function
+learn about 
+
+
 <div dir="rtl" lang="he">
 
 # מחשבון מטריצות - שלב א

@@ -38,11 +38,10 @@ public:
     void operator -= (Matrix const &other);
     Matrix operator - ();
 
-
     bool operator > (Matrix const &other);
     bool operator >= (Matrix const &other);
-    bool operator < (Matrix const other);
-    bool operator <= (Matrix const other);
+    bool operator < (Matrix other);
+    bool operator <= (Matrix other);
     bool operator == (Matrix const &other);
     bool operator != (Matrix const &other);
 
@@ -56,10 +55,9 @@ public:
     Matrix operator * (Matrix const &other);
     void operator *= (double const &scalar);
 
-    // void operator << (); // why get "other"?
-    // void operator >> (); // why get "other"?
 
     friend std::ostream& operator << (std::ostream&, Matrix other);
+    //std::ostream& operator >> (std::ostream&, Matrix other);
 
     void print();
 };
