@@ -43,6 +43,7 @@ public:
     friend Matrix operator * (double const &scalar, Matrix other);
     Matrix operator * (Matrix const &other);
     void operator *= (double const &scalar);
+    void operator *= (Matrix const &other);
 
 
     friend std::ostream& operator << (std::ostream&, Matrix const &other);

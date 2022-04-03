@@ -26,6 +26,8 @@ Matrix::Matrix(std::vector<double> baseArr, int signedrows, int signedcols)
             currRow.resize(0);
         } 
     }
+
+    
 }
 
 Matrix::Matrix(std::vector<std::vector<double>> mat, unsigned int rows, unsigned int cols) {
@@ -301,6 +303,10 @@ void Matrix::operator *= (double const &scalar) {
         }
     }
 
+void Matrix::operator *= (Matrix const &other) {
+    Matrix newMat = *this * other; 
+    *this = newMat;
+}
 
 namespace zich {
     Matrix operator * (double const &scalar, Matrix other) {      
