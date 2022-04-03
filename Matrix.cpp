@@ -179,7 +179,11 @@ Matrix Matrix::operator - () {
     for (size_t i = 0; i<this->rows; i++ ) {
         for (size_t j = 0; j < this->cols; j++)
         {
-            baseArr.push_back(-1*at(i,j));
+            if (at(i,j)!=0) {
+                baseArr.push_back(-1*at(i,j)); 
+            } else {
+                baseArr.push_back(0); 
+            }
         }
     }
     
